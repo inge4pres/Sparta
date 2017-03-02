@@ -3,12 +3,13 @@ package zip
 import (
 	"archive/zip"
 	"errors"
-	"github.com/Sirupsen/logrus"
 	"io"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/Sirupsen/logrus"
 )
 
 // AddToZip creates a source object (either a file, or a directory that will be recursively
@@ -55,7 +56,7 @@ func AddToZip(zipWriter *zip.Writer, source string, rootSource string, logger *l
 		}
 		header.Name = strings.TrimPrefix(strings.TrimPrefix(path, rootSource), string(os.PathSeparator))
 		if info.IsDir() {
-			header.Name += "/"
+			header.Name += filepath.Separator
 		} else {
 			header.Method = zip.Deflate
 		}
