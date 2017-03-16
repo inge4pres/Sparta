@@ -54,7 +54,7 @@ func AddToZip(zipWriter *zip.Writer, source string, rootSource string, logger *l
 		if err != nil {
 			return err
 		}
-		header.Name = strings.TrimPrefix(strings.TrimPrefix(path, rootSource), string(os.PathSeparator))
+		header.Name = strings.TrimPrefix(strings.TrimPrefix(path, rootSource), string(filepath.Separator))
 		if info.IsDir() {
 			header.Name += string(filepath.Separator)
 		} else {

@@ -12,13 +12,13 @@ import (
 	"fmt"
 	"reflect"
 
-	spartaCF "github.com/mweagle/Sparta/aws/cloudformation"
-	spartaS3 "github.com/mweagle/Sparta/aws/s3"
-	spartaZip "github.com/mweagle/Sparta/zip"
 	"net/url"
 	"path/filepath"
 
-	"github.com/mweagle/cloudformationresources"
+	spartaCF "github.com/mweagle/Sparta/aws/cloudformation"
+	spartaS3 "github.com/mweagle/Sparta/aws/s3"
+	spartaZip "github.com/mweagle/Sparta/zip"
+
 	"io"
 	"os"
 	"os/exec"
@@ -27,6 +27,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/mweagle/cloudformationresources"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/aws/aws-sdk-go/aws"
@@ -835,7 +837,8 @@ func createUploadStep(packagePath string) workflowStep {
 				} else {
 					ctx.s3SiteContext.s3UploadURL = newS3UploadURL(s3SiteLambdaZipURL)
 				}
-				ctx.registerFileCleanupFinalizer(tmpFile.Name())
+				//Unnecessary - called already in uploadLocalFileToS3 (at 340)
+				//				ctx.registerFileCleanupFinalizer(tmpFile.Name())
 			}()
 		}
 		wg.Wait()
